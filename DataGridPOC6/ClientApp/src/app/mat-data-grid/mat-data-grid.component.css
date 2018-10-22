@@ -1,0 +1,108 @@
+.grid-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0rem .5rem;
+    justify-content: space-between
+}
+
+.grid-header .mat-form-field {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 1rem;
+}
+
+#search-header {
+    justify-content: flex-end;
+}
+
+.grid-data-container {
+    flex-direction: row;
+    align-content: space-between;
+    /*for scrolling within component*/
+    max-height: 500px;  
+    justify-content: space-evenly;
+    align-content: center;
+    position: relative;
+    margin: 1rem .5rem;
+}
+
+.mat-table {
+    /*for scrolling within component*/
+    overflow: auto;    
+    max-height: 500px;    
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.mat-row:hover {
+    background: rgba(0, 0, 0, .12);
+}
+
+.mat-row:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.mat-row:nth-child(even):hover {
+    background: rgba(0, 0, 0, .12);
+}
+
+.mat-header-row, .mat-row {
+    display: block;
+}
+
+.mat-header-row {
+    position: sticky;
+    top: 0;
+    height: 3rem;
+}
+
+.mat-header-cell {
+    margin: 1rem auto;
+    padding: 1rem .5rem;
+    font-size: 1rem;
+    min-width: 6.25rem;
+    /*change for for cell width*/
+}
+
+.mat-cell {
+    margin: 1rem auto;
+    padding: 1rem .5rem;
+    font-size: 0.9rem;
+    min-width: 6.25rem;
+    /*change for for cell width*/
+}
+
+th.mat-header-cell{
+    border: none;
+}
+
+td.mat-cell {
+    border-bottom: none;
+}
+
+#loader-div {
+    min-height: 0.3125rem;
+    background: transparent;
+}
+
+.width-12_5-rem {
+    min-width: 12.5rem;
+}
+
+.sort-header {
+    position: relative;
+    font-weight: bolder
+}
+
+.sort-header-remove {
+    position: absolute;
+    top: 0.15rem;
+    right: 0;
+    font-size: 1.2rem;
+}
+
+.no-records {
+    text-align: center;
+    color: #757575;
+}
