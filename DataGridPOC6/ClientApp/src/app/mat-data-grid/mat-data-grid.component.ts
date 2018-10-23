@@ -28,6 +28,7 @@ export class MatDataGridComponent implements OnInit {
   private historyPage: number;
   private futurePage: number;
   private loading: boolean;
+  private hasNoRecords : boolean;
 
   @Input('uri') uri: string;
   @Input('col-defs') colDefs: any[];
@@ -49,8 +50,10 @@ export class MatDataGridComponent implements OnInit {
     this.isSantizedBelow = false;
     this.isSantizedAbove = false;
     this.loading = false;
+    this.hasNoRecords = false;
     this.historyPages = [];
     this.futurePages = [];
+    this.rowData = [];
   }
 
   //@ server side search
@@ -178,6 +181,7 @@ export class MatDataGridComponent implements OnInit {
       this.page = !this.hasMoreRecords ? this.page - 1 : this.page;
 
       if (rows.length > 0) {
+        this.hasNoRecords = false;
         if (this.rowData && this.rowData.length > 0) {
           this.rowData = this.scrollingUp ? rows.concat(this.rowData) : this.rowData.concat(rows);
           //@ sanitize rowData if more than 'maxBlocksInCache' record set in browser memory
@@ -197,6 +201,8 @@ export class MatDataGridComponent implements OnInit {
           this.dataSource.sort = this.sort;
           console.log(`total records in client memory: ${this.rowData.length}`);
         }
+      }else if(this.rowData.length===0){
+        this.hasNoRecords = true;
       }
       this.loading = false;
     });
