@@ -11,8 +11,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// third party Module
-import { AgGridModule } from 'ag-grid-angular';
 // component | services
 import { AppComponent } from './app.component';
 import { MatDataGridComponent } from './mat-data-grid/mat-data-grid.component';
@@ -27,7 +25,6 @@ import { MatDataGridService } from './services/mat-data-grid.service';
   ],
   imports: [
     BrowserModule,
-    AgGridModule.withComponents([]),
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,

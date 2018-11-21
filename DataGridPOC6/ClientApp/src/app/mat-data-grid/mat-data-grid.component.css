@@ -16,11 +16,18 @@
     justify-content: flex-end;
 }
 
+.grid{
+    width: 100%;
+    overflow-x:auto;
+}
+
 .grid-data-container {
-    flex-direction: row;
+    flex-direction: nowrap;
     align-content: space-between;
     /*for scrolling within component*/
+    min-height: 500px;
     max-height: 500px;  
+    min-width: auto;
     justify-content: space-evenly;
     align-content: center;
     position: relative;
@@ -30,8 +37,9 @@
 .mat-table {
     /*for scrolling within component*/
     overflow: auto;    
-    max-height: 500px;    
-    width: 100%;
+    min-height: 500px;
+    max-height: 500px;   
+    min-width: auto;
     justify-content: space-evenly;
 }
 
@@ -47,30 +55,39 @@
     background: rgba(0, 0, 0, .12);
 }
 
-.mat-header-row, .mat-row {
-    display: block;
-}
-
 .mat-header-row {
     position: sticky;
-    top: 0;
-    height: 3rem;
+    top: 0;    
+    background: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 3rem;    
+    padding: 0 1rem;
+    
+}
+
+.mat-row {
+    height: 3rem;    
+    padding: 0 1rem;
 }
 
 .mat-header-cell {
-    margin: 1rem auto;
     padding: 1rem .5rem;
     font-size: 1rem;
-    min-width: 6.25rem;
-    /*change for for cell width*/
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: top
 }
 
 .mat-cell {
-    margin: 1rem auto;
-    padding: 1rem .5rem;
+    padding: .75rem .5rem;
     font-size: 0.9rem;
-    min-width: 6.25rem;
-    /*change for for cell width*/
+    display: inline-block;
+    vertical-align: top;
+    align-content: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 th.mat-header-cell{
@@ -105,4 +122,26 @@ td.mat-cell {
 .no-records {
     text-align: center;
     color: #757575;
+}
+div .mat-sort-header-arrow{
+    bottom: -0.35rem;
+}
+.link-cell{
+    cursor: pointer;
+}
+
+::-webkit-scrollbar{
+    height: 5px;
+    width: 5px;
+    background: #f8f8f8;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb:horizontal{
+    background: rgba(0, 0, 0, .12);
+    border-radius: 2.5px;
+}
+
+::-webkit-scrollbar-thumb:vertical{
+    background: rgba(0, 0, 0, .12);
+    border-radius: 2.5px;
 }

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDataGridService } from './../services/mat-data-grid.service';
+import { MatDataGridColDef } from '../models/mat-data-grid-col-def';
 
 @Component({
   selector: 'mat-data-grid',
@@ -31,12 +32,16 @@ export class MatDataGridComponent implements OnInit {
   private hasNoRecords : boolean;
 
   @Input('uri') uri: string;
-  @Input('col-defs') colDefs: any[];
+  @Input('col-defs') colDefs: MatDataGridColDef[];
   @Input('row-selection') rowSelection: any[];
   @Input('max-block-in-cache') maxBlocksInCache: number;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private _gridService: MatDataGridService) {
+
+  }
+
+  ngOnInit() {
     this.page = 1;
     this.pageSize = 25;
     this.historyPage = 0;
@@ -54,6 +59,8 @@ export class MatDataGridComponent implements OnInit {
     this.historyPages = [];
     this.futurePages = [];
     this.rowData = [];
+    this.displayedColumns = this.colDefs.map(col => { return col.field });
+    this.getRows();
   }
 
   //@ server side search
@@ -96,7 +103,7 @@ export class MatDataGridComponent implements OnInit {
   //@ handling scroll up and scroll down event
   handleTableScroll(evt) {
     // limiting to first scroll event
-    const minScrollTime = 50;
+    const minScrollTime = 100;
     if (this.isScrolling == false) {
       var tableViewHeight = evt.target.offsetHeight
       var tableScrollHeight = evt.target.scrollHeight
@@ -140,10 +147,7 @@ export class MatDataGridComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.displayedColumns = this.colDefs.map(col => { return col.field });
-    this.getRows();
-  }
+
 
   // private methods
   // ================================

@@ -12,45 +12,67 @@
   </mat-form-field>
 </div>
 <!-- grid data -->
-<div class="grid-data-container ">
-  <mat-table id='data-grid' #table [dataSource]="dataSource" (scroll)="handleTableScroll($event)" class="mat-elevation-z8"
-    matSort (matSortChange)="handleSort()">
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class='sort-header' [disabled]="hasNoRecords"> Name
-        <mat-icon *ngIf='sortOrder' class='sort-header-remove' (click)='handleSort($event,"remove")'>cancel_outline</mat-icon>
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef class="width-12_5-rem"> Description </th>
-      <td mat-cell *matCellDef="let element" class="width-12_5-rem"> {{element.description}} </td>
-    </ng-container>
-    <!-- Complete Column -->
-    <ng-container matColumnDef="isComplete">
-      <th mat-header-cell *matHeaderCellDef> Complete </th>
-      <td mat-cell *matCellDef="let element"> {{element.isComplete}} </td>
-    </ng-container>
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns;" class="mat-elevation-z2"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="body"></tr>
-
-  </mat-table>  
-  <!-- progress bar for async op when scrolling -->
-  <mat-progress-bar *ngIf='loading;else loaderDiv' mode="indeterminate" class="mat-elevation-z10"></mat-progress-bar>
-  <ng-template #loaderDiv>
-    <div id="loader-div"></div>    
-  </ng-template>
-  <!-- No records found -->
-  <p *ngIf="hasNoRecords" class="no-records">No records found</p>
+<div class="grid">
+  <div class="grid-data-container ">
+  <mat-table 
+            id='data-grid' 
+            #table 
+            [dataSource]="dataSource" 
+            (scroll)="handleTableScroll($event)" 
+            class="mat-elevation-z8"
+            matSort 
+            (matSortChange)="handleSort()"
+        >
+            <!-- grid column definition-->
+            <ng-container 
+                *ngFor="let col of colDefs; index as i" 
+                [matColumnDef]="col.field"             
+            >
+                <mat-header-cell 
+                    *matHeaderCellDef 
+                    [style.width]="col.width"
+                    mat-sort-header
+                    [disabled]='!col.isSortable'
+                    [ngClass]='!col.isSortable? "": "sort-header"'
+                > {{col.fieldHeader}} 
+                    <mat-icon 
+                        *ngIf='col.isSortable && sortOrder' 
+                        class='sort-header-remove' 
+                        (click)='handleSort($event,"remove")'
+                    >cancel_outline
+                    </mat-icon>
+                </mat-header-cell>
+                <mat-cell 
+                    *matCellDef="let row"
+                    [style.width]="col.width"
+                >
+                {{col.cell(row)}}
+                </mat-cell>
+            </ng-container>
+            <!-- grid header row -->
+            <mat-header-row 
+                *matHeaderRowDef="displayedColumns"
+                class="mat-elevation-z2"
+            >
+            </mat-header-row>
+            <!-- grid row-->
+            <mat-row 
+                *matRowDef="let row; columns: displayedColumns"
+                class="body"
+            >
+            </mat-row>
+        </mat-table>
+        <!-- progress bar for async op when scrolling -->
+        <mat-progress-bar 
+            *ngIf='loading;else loaderDiv' 
+            mode="indeterminate" 
+            class="mat-elevation-z10"
+        >
+        </mat-progress-bar>
+        <ng-template #loaderDiv>
+            <div id="loader-div"></div>
+        </ng-template>
+        <!-- No records found -->
+        <p *ngIf="hasNoRecords" class="no-records">No records found</p>
+  </div>
 </div>

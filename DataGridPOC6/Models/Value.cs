@@ -8,9 +8,11 @@ namespace DataGridPOC6.Models
     public class Value
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsComplete { get; set; }
+        public string ServiceTag { get; set; }
+        public string HardwareId { get; set; }
+        public string Username { get; set; }
         public string Status { get; set; }
+        public int Ram { get; set; }
+        public int CpuUsage { get; set; }
     }
 }

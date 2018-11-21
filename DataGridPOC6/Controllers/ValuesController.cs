@@ -27,10 +27,12 @@ namespace DataGridPOC6.Controllers
                     _context.Values.Add(
                         new Value
                         {
-                            Name = "Item" + i,
-                            IsComplete = isComplete,
-                            Description = "Description for Item" + i,
-                            Status = status
+                            ServiceTag = !isComplete ? "infiniteServicerTag" + i : null,
+                            HardwareId = isComplete ? "infinite" + i : null,
+                            Username = "Full Username" + i,
+                            Status = status,
+                            Ram = isComplete ? 100000 : 1000,
+                            CpuUsage = !isComplete ? 100000 : 1000
                         });
                 }
 
@@ -78,13 +80,13 @@ namespace DataGridPOC6.Controllers
             {
                 values = sort == "desc" 
                     ? await _context.Values.AsQueryable()
-                        .Where(x => x.Name.Contains(query))
-                        .OrderByDescending(s => s.Name)
+                        .Where(x => x.ServiceTag.Contains(query))
+                        .OrderByDescending(s => s.ServiceTag)
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize).ToListAsync()
                     : await _context.Values.AsQueryable()
-                        .Where(x => x.Name.Contains(query))
-                        .OrderBy(s => s.Name)
+                        .Where(x => x.ServiceTag.Contains(query))
+                        .OrderBy(s => s.ServiceTag)
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync(); 
@@ -94,18 +96,18 @@ namespace DataGridPOC6.Controllers
             {
                 values = sort == "desc"
                     ? await _context.Values.AsQueryable()
-                        .OrderByDescending(s => s.Name)
+                        .OrderByDescending(s => s.ServiceTag)
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize).ToListAsync()
                     : await _context.Values.AsQueryable()
-                        .OrderBy(s => s.Name)
+                        .OrderBy(s => s.ServiceTag)
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
             }
             else if (string.IsNullOrWhiteSpace(sort) && !string.IsNullOrWhiteSpace(query))
             {
-                values = await _context.Values.AsQueryable().Where(x => x.Name.Contains(query))
+                values = await _context.Values.AsQueryable().Where(x => x.ServiceTag.Contains(query))
                             .Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             }
             else

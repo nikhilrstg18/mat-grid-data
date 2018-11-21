@@ -29,6 +29,7 @@ namespace DataGridPOC6
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
 
             //Using dummy /api/values endpoint
             services.AddDbContext<ValueContext>(opt =>
@@ -47,6 +48,11 @@ namespace DataGridPOC6
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseMvc();
             app.UseSpa(spa =>
             {
